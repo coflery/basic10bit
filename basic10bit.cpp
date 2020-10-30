@@ -6,12 +6,12 @@
 
 using namespace std;
 
-#define ERRCODE_CANTOPENOPENGLDLL			62
+#define ERRCODE_CANTOPENOPENGLDLL		62
 #define ERRCODE_CANTGETWGLGETPROCADDR		63
 #define ERRCODE_CANTGETFUNCTIONPOINTER		64
-#define ERRCODE_CANTGET10BITFORMAT			65
-#define ERRCODE_CANTCREATEVBO				66
-#define ERRCODE_CANTCREATESHADER			67
+#define ERRCODE_CANTGET10BITFORMAT		65
+#define ERRCODE_CANTCREATEVBO			66
+#define ERRCODE_CANTCREATESHADER		67
 #define ERRCODE_CANTMAKECONTEXTCURRENT		68
 #define ERRCODE_CANTGETBASICPIXELFORMAT		69
 #define ERRCODE_CANTGETBASICGLCONTEXT		70
@@ -19,36 +19,36 @@ using namespace std;
 
 void ErrorExit(int exitCode, const string &msg)
 {
-	cout << endl << "ERROR: " << msg << endl << endl;
-	cout << "Exiting..." << endl;
-	Sleep(2000);
+	cout << endl << "错误: " << msg << endl << endl;
+	cout << "退出..." << endl;
+	Sleep(3000);
 	exit(exitCode);
 }
 
-#define GL_ARRAY_BUFFER								0x8892
-#define GL_STATIC_DRAW								0x88E4
-#define GL_FRAGMENT_SHADER							0x8B30
-#define GL_VERTEX_SHADER							0x8B31
+#define GL_ARRAY_BUFFER						0x8892
+#define GL_STATIC_DRAW						0x88E4
+#define GL_FRAGMENT_SHADER					0x8B30
+#define GL_VERTEX_SHADER					0x8B31
 
 #define WGL_CONTEXT_MAJOR_VERSION_ARB				0x2091
 #define WGL_CONTEXT_MINOR_VERSION_ARB				0x2092
 #define WGL_CONTEXT_PROFILE_MASK_ARB				0x9126
-#define WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB	0x00000002
+#define WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB		0x00000002
 
-#define WGL_DRAW_TO_WINDOW_ARB						0x2001
-#define WGL_SUPPORT_OPENGL_ARB						0x2010
-#define WGL_DOUBLE_BUFFER_ARB						0x2011
-#define WGL_PIXEL_TYPE_ARB							0x2013
-#define WGL_RED_BITS_ARB							0x2015
-#define WGL_GREEN_BITS_ARB							0x2017
-#define WGL_BLUE_BITS_ARB							0x2019
-#define WGL_DEPTH_BITS_ARB							0x2022
-#define WGL_TYPE_RGBA_ARB							0x202B
+#define WGL_DRAW_TO_WINDOW_ARB					0x2001
+#define WGL_SUPPORT_OPENGL_ARB					0x2010
+#define WGL_DOUBLE_BUFFER_ARB					0x2011
+#define WGL_PIXEL_TYPE_ARB					0x2013
+#define WGL_RED_BITS_ARB					0x2015
+#define WGL_GREEN_BITS_ARB					0x2017
+#define WGL_BLUE_BITS_ARB					0x2019
+#define WGL_DEPTH_BITS_ARB					0x2022
+#define WGL_TYPE_RGBA_ARB					0x202B
 
 using namespace std;
 
-// Going to obtain function pointers from opengl32.dll, either using GetProcAddress or wglGetProcAddress
-// To avoid conflicts, these things are put in their own namespace
+// 使用GetProcAddress或wglGetProcAddress从opengl32.dll获取函数指针
+// 为避免冲突，将这些内容放在它们自己的命名空间中
 namespace mygl
 {
 	HMODULE hGl = 0;
@@ -59,14 +59,14 @@ namespace mygl
 	typedef int32_t GLsizeiptr;
 #endif
 
-	PROC (WINAPI *wglGetProcAddress)(LPCSTR lpszProc);
-	HGLRC (WINAPI *wglCreateContext)(HDC hdc);
-	BOOL (WINAPI *wglMakeCurrent)(HDC hdc, HGLRC hglrc);
-	HGLRC (WINAPI *wglCreateContextAttribsARB)(HDC hDC, HGLRC hshareContext, const int *attribList);
-	BOOL (WINAPI *wglDeleteContext)(HGLRC hglrc);
-	BOOL (WINAPI *wglSetPixelFormat)(HDC hdc, int iPixelFormat, const PIXELFORMATDESCRIPTOR *ppfd);
+	PROC(WINAPI *wglGetProcAddress)(LPCSTR lpszProc);
+	HGLRC(WINAPI *wglCreateContext)(HDC hdc);
+	BOOL(WINAPI *wglMakeCurrent)(HDC hdc, HGLRC hglrc);
+	HGLRC(WINAPI *wglCreateContextAttribsARB)(HDC hDC, HGLRC hshareContext, const int *attribList);
+	BOOL(WINAPI *wglDeleteContext)(HGLRC hglrc);
+	BOOL(WINAPI *wglSetPixelFormat)(HDC hdc, int iPixelFormat, const PIXELFORMATDESCRIPTOR *ppfd);
 	int (WINAPI *wglDescribePixelFormat)(HDC hdc, int iPixelFormat, UINT nBytes, PIXELFORMATDESCRIPTOR *ppfd);
-	BOOL (WINAPI *wglChoosePixelFormatARB)(HDC hdc, const int *piAttribIList, const FLOAT *pfAttribFList, UINT nMaxFormats, int *piFormats, UINT *nNumFormats);
+	BOOL(WINAPI *wglChoosePixelFormatARB)(HDC hdc, const int *piAttribIList, const FLOAT *pfAttribFList, UINT nMaxFormats, int *piFormats, UINT *nNumFormats);
 
 	const GLubyte* (WINAPI *glGetString)(GLenum name);
 	void (WINAPI *glClear)(GLbitfield  	mask);
@@ -77,42 +77,42 @@ namespace mygl
 	void (WINAPI *glBindVertexArray)(GLuint array);
 	void (WINAPI *glUseProgram)(GLuint program);
 	void (WINAPI *glDrawArrays)(GLenum mode, GLint, GLsizei);
-	GLenum (WINAPI *glGetError)(void);
+	GLenum(WINAPI *glGetError)(void);
 	void (WINAPI *glGenVertexArrays)(GLsizei n, GLuint *arrays);
 	void (WINAPI *glGenBuffers)(GLsizei n, GLuint * buffers);
 	void (WINAPI *glBindBuffer)(GLenum target, GLuint buffer);
 	void (WINAPI *glBufferData)(GLenum target, GLsizeiptr size, const GLvoid * data, GLenum usage);
 	void (WINAPI *glVertexAttribPointer)(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid * pointer);
 	void (WINAPI *glEnableVertexAttribArray)(GLuint index);
-	GLuint (WINAPI *glCreateShader)(GLenum shaderType);
+	GLuint(WINAPI *glCreateShader)(GLenum shaderType);
 	void (WINAPI *glShaderSource)(GLuint shader, GLsizei count, const char **string, const GLint *length);
 	void (WINAPI *glCompileShader)(GLuint shader);
-	GLuint (WINAPI *glCreateProgram)(void);
+	GLuint(WINAPI *glCreateProgram)(void);
 	void (WINAPI *glAttachShader)(GLuint program, GLuint shader);
 	void (WINAPI *glLinkProgram)(GLuint program);
 	void (WINAPI *glViewport)(GLint x, GLint y, GLsizei width, GLsizei height);
 
-	// This define first tries to get a function pointer using wglGetProcAddress, with
-	// GetProcAddress as a fallback mechanism
-	#define GETPROC(x) \
+	// 此定义首先尝试wglGetProcAddress获取函数指针，
+	// 失败则使用GetProcAddress作为备用
+#define GETPROC(x) \
 	{\
 		x = (decltype(x))wglGetProcAddress(#x); \
 		if (!x)\
 			x = (decltype(x))GetProcAddress(hGl, #x); \
-		cout << "FUNCTION: " << #x << " = " << x << endl; \
+		cout << "函数: " << #x << " = " << x << endl; \
 		if (!x) \
-			ErrorExit(ERRCODE_CANTGETFUNCTIONPOINTER, "Can't get pointer to function " #x); \
+			ErrorExit(ERRCODE_CANTGETFUNCTIONPOINTER, "无法获取函数入口 " #x); \
 	}
 
 	void internal_setupGLFunctions()
 	{
 		hGl = LoadLibraryA("opengl32.dll");
 		if (!hGl)
-			ErrorExit(ERRCODE_CANTOPENOPENGLDLL, "Unable to open opengl32.dll");
+			ErrorExit(ERRCODE_CANTOPENOPENGLDLL, "无法打开动态链接库 opengl32.dll");
 
 		wglGetProcAddress = (decltype(wglGetProcAddress))GetProcAddress(hGl, "wglGetProcAddress");
 		if (!wglGetProcAddress)
-			ErrorExit(ERRCODE_CANTGETWGLGETPROCADDR, "Unable to get function pointer for wglGetProcAddress");
+			ErrorExit(ERRCODE_CANTGETWGLGETPROCADDR, "无法获取函数 wglGetProcAddress 的入口");
 
 		GETPROC(wglCreateContext);
 		GETPROC(wglMakeCurrent);
@@ -151,14 +151,13 @@ namespace mygl
 		GETPROC(glViewport);
 	}
 
-	// Gets pointers to the needed OpenGL functions
+	// 获取指向OpenGL函数的指针
 	void setup()
 	{
-		// First, open the dll and get a few function pointers to get started
+		// 首先打开dll并获取一些函数指针
 		internal_setupGLFunctions();
 
-		// We need to create a context and make it current to be able to get the
-		// rest of the function pointers
+		// 我们需要创建一个上下文并将其设为最新,以便能够获取其余函数的指针
 		WNDCLASS wndCls;
 		HINSTANCE hInst = GetModuleHandle(NULL);
 
@@ -169,17 +168,16 @@ namespace mygl
 		wndCls.lpszClassName = TEXT("dummy");
 		RegisterClass(&wndCls);
 
-		HWND hWnd = CreateWindow(TEXT("dummy"), TEXT("dummy"), WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW, 
-			                     0, 0, 0, 0, 0, 0, hInst, 0);
+		HWND hWnd = CreateWindow(TEXT("模型"), TEXT("模型"), WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW,
+			0, 0, 0, 0, 0, 0, hInst, 0);
 		HDC hDC = GetDC(hWnd);
 
-		// This is just a very basic pixel format, so we can create a window and
-		// gain access to other opengl functions
+		// 这只是一种非常基本的像素格式,以便我们可以创建一个窗口并访问其他opengl函数
 		PIXELFORMATDESCRIPTOR pfd =
 		{
 			sizeof(PIXELFORMATDESCRIPTOR),
 			1,
-			PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL  | PFD_DOUBLEBUFFER,    //Flags
+			PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,    //标记
 			PFD_TYPE_RGBA,
 			32,
 			0, 0, 0, 0, 0, 0,
@@ -197,22 +195,22 @@ namespace mygl
 
 		int pixelFormat = ChoosePixelFormat(hDC, &pfd);
 		if (pixelFormat == 0)
-			ErrorExit(ERRCODE_CANTGET10BITFORMAT, "Unable to get basic pixel format for dummy window");
+			ErrorExit(ERRCODE_CANTGET10BITFORMAT, "无法获取用于模型窗口的基本像素格式");
 
 		SetPixelFormat(hDC, pixelFormat, &pfd);
 
 		HGLRC rc = mygl::wglCreateContext(hDC);
 		if (!rc)
-			ErrorExit(ERRCODE_CANTGETBASICGLCONTEXT, "Unable to get basic GL context for dummy window");
+			ErrorExit(ERRCODE_CANTGETBASICGLCONTEXT, "无法获取用于模型窗口的基本GL上下文");
 
 		mygl::wglMakeCurrent(hDC, rc);
 
-		// Now we're able to get the rest of the function pointers
+		// 现在我们能够获取其他的函数指针
 		internal_setupGLFunctions2();
 
-		cout << "VERSION(1): " << mygl::glGetString(GL_VERSION) << endl;
-		cout << "VENDOR(1): " << mygl::glGetString(GL_VENDOR) << endl;
-		cout << "RENDERER(1): " << mygl::glGetString(GL_RENDERER) << endl;
+		cout << "版本(1): " << mygl::glGetString(GL_VERSION) << endl;
+		cout << "公司(1): " << mygl::glGetString(GL_VENDOR) << endl;
+		cout << "渲染器(1): " << mygl::glGetString(GL_RENDERER) << endl;
 
 		wglDeleteContext(rc);
 		DeleteDC(hDC);
@@ -225,7 +223,7 @@ void ResizeWindow(HWND hWnd, int w, int h);
 LRESULT CALLBACK MainWndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK AboutDlgProc(HWND, UINT, WPARAM, LPARAM);
 
-// Some global variables for the OpenGL code
+// OpenGL一些全局变量的代码
 GLuint VertexShaderId, FragmentShaderId1, FragmentShaderId2, ProgramId1, ProgramId2,
 VaoId0, VaoId1, VboId0, VboId1, TexBufferId0, TexBufferId1, TexId0, TexId1;
 HGLRC globalContext = NULL;
@@ -233,12 +231,11 @@ bool g_init = false;
 
 int main()
 {
-	// Grab OpenGL functions
+	// 取得 OpenGL 函数
 	mygl::setup();
 
-	// Create and show a window, this window will display the black/white gradient
-	// The lower half is forced to 8 bit precision, the top part uses 10 bit precision
-	// if the monitor supports it
+	// 创建并显示一个窗口,该窗口将显示从黑色到白色的灰阶渐变
+	// 下半窗口强制为8位精度,如果显示器支持,则上半窗口为10位精度
 	HINSTANCE hInstance = GetModuleHandle(NULL);
 	WNDCLASS wc;
 
@@ -255,13 +252,13 @@ int main()
 
 	RegisterClass(&wc);
 
-	HWND hWnd = CreateWindow(TEXT("myclass"), TEXT("Black/White gradient"),
-		                     WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW,
- 		                     100, 100, 640, 480, NULL, NULL, hInstance, NULL);
+	HWND hWnd = CreateWindow(TEXT("myclass"), TEXT("黑白灰阶"),
+		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW,
+		100, 100, 640, 480, NULL, NULL, hInstance, NULL);
 	int nCmdShow = SW_SHOW;
 	ShowWindow(hWnd, nCmdShow);
 
-	// Let's see if we can get a 10 bit pixel format
+	// 让我们检查是否能够获取到一个10位像素格式
 	int attribsDesired[] = {
 		WGL_SUPPORT_OPENGL_ARB, 1,
 		WGL_DRAW_TO_WINDOW_ARB, 1,
@@ -279,21 +276,21 @@ int main()
 	HDC hDC = GetDC(hWnd);
 
 	if (!mygl::wglChoosePixelFormatARB(hDC, attribsDesired, NULL, 1000, formats, &numFormats))
-		ErrorExit(ERRCODE_CANTGET10BITFORMAT, "Unable to choose 10 bit pixel format");
-	
-	cout << "LOG: Got " << numFormats << " formats" << endl;
+		ErrorExit(ERRCODE_CANTGET10BITFORMAT, "无法选择 10 位像素格式");
+
+	cout << "日志: 获取到 " << numFormats << " 格式" << endl;
 	if (numFormats < 1)
-		ErrorExit(ERRCODE_CANTGET10BITFORMAT, "No useable 10 bit format detected");
+		ErrorExit(ERRCODE_CANTGET10BITFORMAT, "没有检测到可用的 10 位像素格式");
 
 	int pixelFormat = formats[0];
-	cout << "LOG: Using first detected pixelformat: " << pixelFormat << endl;
+	cout << "日志: 使用第一个检测到的像素格式: " << pixelFormat << endl;
 
 	PIXELFORMATDESCRIPTOR pfd;
 	memset(&pfd, 0, sizeof(pfd));
 
 	SetPixelFormat(hDC, pixelFormat, &pfd);
 
-	// Initialize the OpenGL context
+	// 初始化 OpenGL 上下文
 	int attribs[] = {
 		WGL_CONTEXT_MAJOR_VERSION_ARB, 	4,
 		WGL_CONTEXT_MINOR_VERSION_ARB,	0,
@@ -303,29 +300,29 @@ int main()
 
 	HGLRC rc = mygl::wglCreateContextAttribsARB(hDC, NULL, attribs);
 	if (!rc)
-		ErrorExit(ERRCODE_CANTGETOPENGLCONTEXT, "Unable to initialize OpenGL 4.0 context");
+		ErrorExit(ERRCODE_CANTGETOPENGLCONTEXT, "无法初始化 OpenGL 4.0 上下文");
 
-	// Keep this 10 bit context for later
+	// 之后保持这些10位的上下文
 	globalContext = rc;
-	cout << "LOG: GL context is " << rc << endl;
+	cout << "日志: GL 目录是 " << rc << endl;
 
 	if (!mygl::wglMakeCurrent(hDC, globalContext))
-		ErrorExit(ERRCODE_CANTMAKECONTEXTCURRENT, "Unable to make gl context current");
+		ErrorExit(ERRCODE_CANTMAKECONTEXTCURRENT, "无法创建当前 GL 上下文");
 
-	cout << "VERSION(2): " << mygl::glGetString(GL_VERSION) << endl;
-	cout << "VENDOR(2): " << mygl::glGetString(GL_VENDOR) << endl;
-	cout << "RENDERER(2): " << mygl::glGetString(GL_RENDERER) << endl;
+	cout << "版本(2): " << mygl::glGetString(GL_VERSION) << endl;
+	cout << "公司(2): " << mygl::glGetString(GL_VENDOR) << endl;
+	cout << "渲染器(2): " << mygl::glGetString(GL_RENDERER) << endl;
 
-	// Let's see how many R, G and B bits we're using according to OpenGL
+	// 让我们看看我们正在使用的OpenGL的RGB位宽分别有多少
 	int r = 0, g = 0, b = 0, a = 0;
 	mygl::glGetIntegerv(GL_RED_BITS, &r);
 	mygl::glGetIntegerv(GL_GREEN_BITS, &g);
 	mygl::glGetIntegerv(GL_BLUE_BITS, &b);
 	mygl::glGetIntegerv(GL_ALPHA_BITS, &a);
 
-	cout << "BITDEPTH: " << r << ":" << g << ":" << b << ":" << a << endl;
+	cout << "位宽: " << r << ":" << g << ":" << b << ":" << a << endl;
 
-	// The message loop
+	// 消息循环
 
 	MSG msg;
 	BOOL bRet;
@@ -334,7 +331,7 @@ int main()
 	{
 		if (bRet == -1)
 		{
-			cout << "WARNING: Unexpected return value from GetMessage" << bRet << endl;
+			cout << "警告: 从GetMessage得到未预料的返回值 " << bRet << endl;
 		}
 		else
 		{
@@ -346,9 +343,8 @@ int main()
 	return 0;
 }
 
-// This is the  window procedure for our window
-// We're only going to do something special when painting and when resing.
-// When the 
+// 这是我们窗口的窗口程序
+// 我们只在绘制和调整大小的时候才有处理动作
 LRESULT CALLBACK MainWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
@@ -461,7 +457,7 @@ void CreateVBO(bool upper, GLuint &VaoId, GLuint &VboId)
 
 	ErrorCheckValue = mygl::glGetError();
 	if (ErrorCheckValue != GL_NO_ERROR)
-		ErrorExit(ERRCODE_CANTCREATEVBO, "Could not create a VBO");
+		ErrorExit(ERRCODE_CANTCREATEVBO, "无法创建一个 VBO");
 }
 
 void CreateShaders(void)
@@ -492,7 +488,7 @@ void CreateShaders(void)
 
 	ErrorCheckValue = mygl::glGetError();
 	if (ErrorCheckValue != GL_NO_ERROR)
-		ErrorExit(ERRCODE_CANTCREATESHADER, "Could not create the shaders");
+		ErrorExit(ERRCODE_CANTCREATESHADER, "无法创建渲染器");
 }
 
 void initializeGL(HWND hWnd, HDC hDC)
@@ -524,7 +520,7 @@ void PaintWindow(HWND hWnd)
 	HDC hDC = GetDC(hWnd);
 
 	if (!mygl::wglMakeCurrent(hDC, globalContext))
-		ErrorExit(ERRCODE_CANTMAKECONTEXTCURRENT, "Unable to make gl context current");
+		ErrorExit(ERRCODE_CANTMAKECONTEXTCURRENT, "无法创建当前 GL 上下文");
 
 	if (!g_init)
 	{
@@ -533,7 +529,7 @@ void PaintWindow(HWND hWnd)
 	}
 
 	paintGL();
-	SwapBuffers(hDC); 
+	SwapBuffers(hDC);
 
 	mygl::wglMakeCurrent(hDC, 0);
 }
