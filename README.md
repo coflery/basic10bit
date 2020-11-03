@@ -14,5 +14,5 @@ top half.
 opengl上下文将被初始化为10位色彩范围（0-1023）。因此，如果显示器和显卡都
 支持该模式，在窗口的下半部分将看到带状色阶，在上半部分将看到平滑的渐变。
 
-Note that you must make sure that no dithering is enabled.
+Note that you must make sure that no dithering is enabled.  
 请注意，您必须确保没有启用抖动（Dither）功能。  
