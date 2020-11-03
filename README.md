@@ -1,6 +1,6 @@
 ### Windows OpenGL test program to check 10 bit support ###
-### 用于测试10位支持的Windows OpenGL测试程序 ###  
-
+### 用于测试10位支持的Windows OpenGL测试程序 ###
+  
 Creates a window that shown a black to white gradient. The lower
 half is forced to 8 bit precision, while no such limitation is
 set on the top half.  
