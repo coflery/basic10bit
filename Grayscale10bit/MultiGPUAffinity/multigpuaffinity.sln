@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multigpuaffinity", "multigpuaffinity.vcproj", "{6D16CBDA-CDCF-4FA2-A82B-2F903D37B9CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6D16CBDA-CDCF-4FA2-A82B-2F903D37B9CE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6D16CBDA-CDCF-4FA2-A82B-2F903D37B9CE}.Debug|Win32.Build.0 = Debug|Win32
+		{6D16CBDA-CDCF-4FA2-A82B-2F903D37B9CE}.Release|Win32.ActiveCfg = Release|Win32
+		{6D16CBDA-CDCF-4FA2-A82B-2F903D37B9CE}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
